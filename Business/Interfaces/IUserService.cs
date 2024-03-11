@@ -13,6 +13,7 @@ namespace Business.Interfaces
         IEnumerable<UserReadDTO> GetAllUsers(GetAllParams options);
         UserReadDTO? GetOneUser(Guid userId);
         UserReadDTO CreateNewUser(UserCreateDTO user);
+        UserReadDTO? Login(string username, string password);
         bool CheckMail(string mail);
     }
 }

@@ -9,7 +9,7 @@ using Core.Entities;
 
 namespace Business.Services
 {
-    internal class UserService : IUserService
+    public class UserService : IUserService
     {
         public bool CheckMail(string mail)
         {
@@ -27,6 +27,11 @@ namespace Business.Services
         }
 
         public UserReadDTO? GetOneUser(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserReadDTO? Login(string username, string password)
         {
             throw new NotImplementedException();
         }
