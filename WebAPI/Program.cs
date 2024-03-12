@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Npgsql;
 using WebAPI.Database;
 using WebAPI.Repositories;
+using WebAPI.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserService, UserService>();
-// builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
 
 // Add database context 
 var connectionString = builder.Configuration.GetConnectionString("LocalDb");

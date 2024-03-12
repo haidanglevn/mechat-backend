@@ -13,5 +13,10 @@ namespace Core.Entities
         public required string Email { get; set; }   
         public string Tag { get; set; } = string.Empty;
         public string Avatar { get; set; } = string.Empty;
+
+        public virtual ICollection<Friendship> SentFriendships { get; set; }
+        public virtual ICollection<Friendship> ReceivedFriendships { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Participant> Participants { get; set; }
     }
 }
