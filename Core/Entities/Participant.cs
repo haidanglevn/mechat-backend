@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class Participant: BaseEntity
+    public class Participant
     {
         public Guid UserId { get; set; }
-        public User User { get; set; }
-
         public Guid ConversationId { get; set; }
+        public string? NickName { get; set; } = null;
+        public DateTime JoinDate { get; set; } = DateTime.Now;
+        public User User { get; set; }
         public Conversation Conversation { get; set; }
     }
 }

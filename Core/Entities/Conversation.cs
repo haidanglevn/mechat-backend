@@ -8,6 +8,8 @@ namespace Core.Entities
 {
     public class Conversation: BaseEntity
     {
+        public string Title { get; set; }
+        public ConversationType ConversationType { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<Participant> Participants { get; set; }
     }

@@ -1,12 +1,13 @@
 using System.Text;
 using Business.Interfaces;
 using Business.Services;
+using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Npgsql;
 using WebAPI.Database;
+using WebAPI.Hubs;
 using WebAPI.Repositories;
-using WebAPI.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,7 @@ builder.Services.AddCors(options =>
     {
         builder.WithOrigins("http://localhost:3000")
                .AllowAnyHeader()
-               .AllowAnyMethod();
+               .AllowAnyMethod().AllowCredentials();
       
     });
 });
@@ -28,8 +29,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSignalR();
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IConversationService, ConversationService>();
+builder.Services.AddScoped<IConversationRepo, ConversationRepo>();
+builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IMessageRepo, MessageRepo>();
+builder.Services.AddScoped<IChatHub, ChatHub>();
 
 // Add database context 
 var connectionString = builder.Configuration.GetConnectionString("LocalDb");
@@ -73,5 +81,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<TestHub>("/test");
 
 app.Run();

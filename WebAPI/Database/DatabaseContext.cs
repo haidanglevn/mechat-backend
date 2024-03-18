@@ -8,6 +8,10 @@ namespace WebAPI.Database
     {
         private readonly IConfiguration _configuration;
         public DbSet<User> Users { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Friendship> Friendships { get; set; }
+        public DbSet<Participant> Participants { get; set; }
 
         static DatabaseContext()
         {
@@ -35,6 +39,8 @@ namespace WebAPI.Database
 
             // Seed Data setup
             modelBuilder.Entity<User>().HasData(SeedData.Users());
+            modelBuilder.Entity<Conversation>().HasData(SeedData.Conversations());
+            modelBuilder.Entity<Participant>().HasData(SeedData.Participants());
 
             // User to Friendships
             modelBuilder.Entity<User>()

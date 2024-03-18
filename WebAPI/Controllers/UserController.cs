@@ -1,6 +1,10 @@
 ﻿using Business.DTOs;
 using Business.Interfaces;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using WebAPI.Hubs;
+
 
 namespace WebAPI.Controllers
 {
@@ -9,9 +13,11 @@ namespace WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly IChatHub _chatHub;
+        public UserController(IUserService userService, IChatHub chatHub)
         {
-            _userService = userService;
+            _userService = userService; 
+            _chatHub = chatHub; 
         }
 
         [HttpPost]
@@ -27,6 +33,10 @@ namespace WebAPI.Controllers
             return !isEmailExist;
         }
 
-        
+        [HttpPost("signalR")]
+        public async Task SendSignalR([FromBody] string? message = null)
+        {
+           await  _chatHub.SendMessage(string.IsNullOrEmpty(message) ? "Emnpty Message" : message);
+        }
     }
 }

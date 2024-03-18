@@ -1,8 +1,7 @@
 ﻿using Core.Entities;
-
+using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Database;
-using WebAPI.Repositories.Interfaces;
 
 namespace WebAPI.Repositories
 {

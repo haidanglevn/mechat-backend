@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace WebAPI.Repositories.Interfaces
+namespace Core.Interfaces
 {
     public interface IUserRepo
     {

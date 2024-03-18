@@ -1,6 +1,19 @@
-@WebAPI_HostAddress = http://localhost:5088
+@WebAPI_HostAddress = https://localhost:7170
 
 GET {{WebAPI_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+POST {{WebAPI_HostAddress}}/checkDirect
+Content-Type: application/json
+
+{
+    checkDto: {
+          UserId1 : "ad0ad1be-f7e5-47c7-b4c3-c17250cbebab",
+  UserId2 : "760454fa-4af1-4ae6-9b18-ed3aec4be2a9"
+
+    }
+}
 
 ###
