@@ -12,7 +12,7 @@ namespace Core.Entities
         public Guid ConversationId { get; set; }
         public string? NickName { get; set; } = null;
         public DateTime JoinDate { get; set; } = DateTime.Now;
-        public User User { get; set; }
-        public Conversation Conversation { get; set; }
+        //public User User { get; set; }
+        //public Conversation Conversation { get; set; }
     }
 }

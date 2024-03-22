@@ -45,6 +45,30 @@ namespace WebAPI.Repositories
             throw new NotImplementedException();
         }
 
+        public Conversation GetDirectConversation(Guid userId1, Guid userId2)
+        {
+            // First, find if there's a direct conversation between the two users
+            var directConversation = _participants
+                .Where(p1 => p1.UserId == userId1)
+                .Join(_participants,
+                    p1 => p1.ConversationId,
+                    p2 => p2.ConversationId,
+                    (p1, p2) => new { P1 = p1, P2 = p2 })
+                .Where(joined => joined.P2.UserId == userId2 && joined.P1.ConversationId == joined.P2.ConversationId)
+                .Select(joined => _conversations.FirstOrDefault(c => c.Id == joined.P1.ConversationId && c.ConversationType == ConversationType.Direct))
+                .FirstOrDefault();
+
+            // Check if a conversation was found
+            if (directConversation != null)
+            {
+                return directConversation;
+            }
+            else
+            {
+                throw new InvalidOperationException("No direct conversation exists between the specified users.");
+            }
+        }
+
         public bool HasDirectConversation(Guid userId1, Guid userId2)
         {
             var directConversationExists = _participants

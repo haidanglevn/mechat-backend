@@ -37,7 +37,9 @@ builder.Services.AddScoped<IConversationService, ConversationService>();
 builder.Services.AddScoped<IConversationRepo, ConversationRepo>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IMessageRepo, MessageRepo>();
-builder.Services.AddScoped<IChatHub, ChatHub>();
+builder.Services.AddScoped<IParticipantService, ParticipantService>();
+builder.Services.AddScoped<IParticipantRepo, ParticipantRepo>();
+//builder.Services.AddScoped<IChatHub, ChatHub>();
 
 // Add database context 
 var connectionString = builder.Configuration.GetConnectionString("LocalDb");

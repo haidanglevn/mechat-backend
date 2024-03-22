@@ -1,4 +1,5 @@
-﻿using Business.Interfaces;
+﻿using Business.DTOs;
+using Business.Interfaces;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +15,10 @@ namespace WebAPI.Controllers
             _messageService = messageService;
         }
 
-        [HttpPost]
-        public IActionResult SendMessage(Message message)
+        [HttpPost("/sendMessage")]
+        public IActionResult SendMessage(MessageSentDTO messageDto)
         {
-            return CreatedAtAction(nameof(SendMessage), _messageService.SendMessage(message));
+            return CreatedAtAction(nameof(SendMessage), _messageService.SendMessage(messageDto));
         }
     }
 }

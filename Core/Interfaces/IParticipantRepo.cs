@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Business.DTOs;
 using Core.Entities;
 
-namespace Business.Interfaces
+namespace Core.Interfaces
 {
-    public interface IMessageService
+    public interface IParticipantRepo
     {
-        Message? SendMessage(MessageSentDTO message);
+        Participant AddParticipant(Participant participant);
     }
 }

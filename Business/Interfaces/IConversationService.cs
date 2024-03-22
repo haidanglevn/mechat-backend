@@ -13,5 +13,6 @@ namespace Business.Interfaces
         Conversation CreateNewConversation(ConversationCreateDTO conversationCreateDTO);
         IEnumerable<Conversation> GetAllMessagesByConversationId(Guid conversationId);
         bool HasDirectConversation(ConversationCheckHasDirectDTO checkDTO);
+        Conversation GetDirectConversation(ConversationCheckHasDirectDTO checkDTO);
     }
 }

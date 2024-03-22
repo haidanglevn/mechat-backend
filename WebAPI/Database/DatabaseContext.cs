@@ -57,16 +57,6 @@ namespace WebAPI.Database
             modelBuilder.Entity<Participant>()
                 .HasKey(p => new { p.UserId, p.ConversationId });
 
-            modelBuilder.Entity<Participant>()
-                .HasOne(p => p.User)
-                .WithMany(u => u.Participants)
-                .HasForeignKey(p => p.UserId);
-
-            modelBuilder.Entity<Participant>()
-                .HasOne(p => p.Conversation)
-                .WithMany(c => c.Participants)
-                .HasForeignKey(p => p.ConversationId);
-
             // Conversations to Messages
             modelBuilder.Entity<Conversation>()
                 .HasMany(c => c.Messages)
