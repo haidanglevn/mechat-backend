@@ -20,4 +20,12 @@ namespace Business.DTOs
         public Guid UserId1 { get; set; }
         public Guid UserId2 { get; set; }
     }
+
+    public class ConversationReadDTO
+    {
+        public Guid Id { get; set; }
+        public string Title { get; set; }
+        public ConversationType ConversationType { get; set; }
+        public ICollection<Message> Messages { get; set; }
+    }
 }

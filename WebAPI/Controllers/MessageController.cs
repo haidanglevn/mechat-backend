@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
             _messageService = messageService;
         }
 
-        [HttpPost("/sendMessage")]
+        [HttpPost("send-message")]
         public IActionResult SendMessage(MessageSentDTO messageDto)
         {
             return CreatedAtAction(nameof(SendMessage), _messageService.SendMessage(messageDto));

@@ -57,17 +57,16 @@ namespace WebAPI.Database
             modelBuilder.Entity<Participant>()
                 .HasKey(p => new { p.UserId, p.ConversationId });
 
-            // Conversations to Messages
-            modelBuilder.Entity<Conversation>()
-                .HasMany(c => c.Messages)
-                .WithOne(m => m.Conversation)
-                .HasForeignKey(m => m.ConversationId);
-
-            // Users to Messages
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Messages)
-                .WithOne(m => m.Sender)
+                .WithOne()
                 .HasForeignKey(m => m.SenderId);
+
+            modelBuilder.Entity<Conversation>()
+                .HasMany(c=> c.Messages)
+                .WithOne()
+                .HasForeignKey(m => m.ConversationId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

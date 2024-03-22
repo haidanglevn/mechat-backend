@@ -33,10 +33,6 @@ namespace WebAPI.Controllers
             return !isEmailExist;
         }
 
-        [HttpPost("signalR")]
-        public async Task SendSignalR([FromBody] string? message = null)
-        {
-           await  _chatHub.SendMessage(string.IsNullOrEmpty(message) ? "Emnpty Message" : message);
-        }
+        
     }
 }

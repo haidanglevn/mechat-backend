@@ -21,7 +21,7 @@ Content-Type: application/json
 {
   "SenderId" : "ad0ad1be-f7e5-47c7-b4c3-c17250cbebab",
   "ReceiverId" : "760454fa-4af1-4ae6-9b18-ed3aec4be2a9",
-  "Content": "Hello there!"
+  "Content": "Yo Man!"
 }
 
 ###

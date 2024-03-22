@@ -1,6 +1,7 @@
 using System.Text;
 using Business.Interfaces;
 using Business.Services;
+using Business.Shared;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -40,6 +41,8 @@ builder.Services.AddScoped<IMessageRepo, MessageRepo>();
 builder.Services.AddScoped<IParticipantService, ParticipantService>();
 builder.Services.AddScoped<IParticipantRepo, ParticipantRepo>();
 //builder.Services.AddScoped<IChatHub, ChatHub>();
+
+builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 // Add database context 
 var connectionString = builder.Configuration.GetConnectionString("LocalDb");

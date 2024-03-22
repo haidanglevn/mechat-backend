@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Business.DTOs;
 using Business.Interfaces;
 using Core.Entities;
@@ -13,11 +14,13 @@ namespace Business.Services
     public class ConversationService : IConversationService
     {
         private IConversationRepo _conversationRepo;
+        private IMapper _mapper;
         private IParticipantService _participantService;  
-        public ConversationService(IConversationRepo conversationRepo, IParticipantService participant)
+        public ConversationService(IConversationRepo conversationRepo, IParticipantService participant, IMapper mapper)
         {
             _conversationRepo = conversationRepo;
             _participantService = participant;  
+            _mapper = mapper;
         }
 
         public Conversation CreateNewConversation(ConversationCreateDTO conversationCreateDTO)
@@ -60,9 +63,17 @@ namespace Business.Services
             }
         }
 
-        public IEnumerable<Conversation> GetAllMessagesByConversationId(Guid conversationId)
+        public ConversationReadDTO? GetAllMessagesByConversationId(Guid conversationId)
         {
-            throw new NotImplementedException();
+            var cons = _conversationRepo.GetAllMessagesByConversationId(conversationId);
+            if (cons is not null)
+            {
+                return _mapper.Map<Conversation, ConversationReadDTO>(cons);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public Conversation GetDirectConversation(ConversationCheckHasDirectDTO checkDTO)

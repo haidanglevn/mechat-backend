@@ -40,9 +40,11 @@ namespace WebAPI.Repositories
             return conversation;
         }
 
-        public IEnumerable<Conversation> GetAllMessagesByConversationId(Guid conversationId)
+        public Conversation? GetAllMessagesByConversationId(Guid conversationId)
         {
-            throw new NotImplementedException();
+            return _conversations
+                        .Include(c => c.Messages)
+                        .FirstOrDefault(c=>c.Id == conversationId);
         }
 
         public Conversation GetDirectConversation(Guid userId1, Guid userId2)

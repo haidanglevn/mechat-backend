@@ -14,16 +14,22 @@ namespace WebAPI.Controllers
         {
             _conversationService = conversationService;
         }
-        [HttpPost("/create")]
+        [HttpPost("create-conversation")]
         public IActionResult CreateConversation([FromBody] ConversationCreateDTO conversationCreateDTO)
         {
             return CreatedAtAction(nameof(CreateConversation), _conversationService.CreateNewConversation(conversationCreateDTO));
         }
 
-        [HttpPost("/checkDirect")] 
+        [HttpPost("check-direct")] 
         public bool HasDirectConversation([FromBody] ConversationCheckHasDirectDTO checkDto)
         {
             return _conversationService.HasDirectConversation(checkDto);    
+        }
+
+        [HttpGet("get-messages-by-conversation-id/{conversationId}")]
+        public ActionResult<ConversationReadDTO> GetAllMessagesByConversationId(Guid conversationId)
+        {
+            return Ok(_conversationService.GetAllMessagesByConversationId(conversationId));
         }
 
     }
