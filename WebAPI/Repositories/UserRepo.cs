@@ -14,6 +14,10 @@ namespace WebAPI.Repositories
             _database = database;
             _users = database.Users;
         }
+        public User? FindByEmail(string email)
+        {
+            return _users.AsNoTracking().FirstOrDefault(u => u.Email == email);
+        }
 
         public bool CheckEmail(string email)
         {
@@ -34,7 +38,26 @@ namespace WebAPI.Repositories
 
         public User? GetOneUser(Guid userId)
         {
-            return _users.FirstOrDefault(u=> u.Id == userId);   
+            return _users.FirstOrDefault(u => u.Id == userId);
         }
+
+        public bool CheckUserExist(Guid userId)
+        {
+            return _users.Any(c => c.Id == userId);
+        }
+
+        public int GetHighestTagForUsername(string username)
+        {
+            var highestTag = _users
+                             .Where(u => u.UserName == username)
+                             .Select(u => u.Tag)
+                             .ToList()
+                             .Select(tag => int.Parse(tag.TrimStart('#')))
+                             .DefaultIfEmpty(0)
+                             .Max();
+
+            return highestTag;
+        }
+
     }
-}
+};

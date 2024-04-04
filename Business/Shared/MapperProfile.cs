@@ -14,8 +14,11 @@ namespace Business.Shared
         public MapperProfile() 
         {
             CreateMap<Conversation, ConversationCreateDTO>();
-            CreateMap<Conversation, ConversationReadDTO>();
-            
+            CreateMap<Conversation, ConversationInfoDTO>();
+            CreateMap<Message, MessageGetAllDTO>();
+            CreateMap<Message, MessageSimpleDTO>();
+            CreateMap<User, UserCreateDTO>();
+            CreateMap<User, UserReadDTO>();
         }
     }
 }

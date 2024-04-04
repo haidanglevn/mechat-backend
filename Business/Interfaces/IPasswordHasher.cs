@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.Interfaces
 {
-    internal interface IPasswordHasher
+    public interface IPasswordHasher
     {
         string HashPassword(string password);
         bool VerifyPassword(string hashedPassword, string userInputPassword);

@@ -8,5 +8,7 @@ namespace Core.Interfaces
         User? GetOneUser(Guid userId);
         User CreateNewUser(User user);
         bool CheckEmail(string email);
+        User? FindByEmail(string email);
+        int GetHighestTagForUsername(string username);
     }
 }
