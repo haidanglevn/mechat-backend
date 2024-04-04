@@ -8,6 +8,7 @@ using Business.DTOs;
 using Business.Interfaces;
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.Extensions.Options;
 
 namespace Business.Services
 {
@@ -40,35 +41,36 @@ namespace Business.Services
                     Id = Guid.NewGuid(),
                     CreatedAt = DateTime.Now,
                 };
-                //Participant participant1 = new()
-                //{
-                //    ConversationId = newConversation.Id,
-                //    UserId = conversationCreateDTO.UserId1,
-                //};
-                
-                //Participant participant2 = new()
-                //{
-                //    ConversationId = newConversation.Id,
-                //    UserId = conversationCreateDTO.UserId2,
-                //};
-                //_participantService.AddParticipant(participant1);
-                //_participantService.AddParticipant(participant2);
 
                 return _conversationRepo.CreateNewConversation(newConversation, conversationCreateDTO.UserId1, conversationCreateDTO.UserId2);
 
             }
-            catch (Exception ex) 
+            catch
             {
                 throw new Exception("Error creating conversation");
             }
         }
-
-        public ConversationReadDTO? GetAllMessagesByConversationId(Guid conversationId)
+        public Conversation GetDirectConversation(ConversationCheckHasDirectDTO checkDTO)
         {
-            var cons = _conversationRepo.GetAllMessagesByConversationId(conversationId);
-            if (cons is not null)
+            return _conversationRepo.GetDirectConversation(checkDTO.UserId1,checkDTO.UserId2);
+        }
+
+        public ConversationInfoDTO? GetConversationInfo(Guid conversationId)
+        {
+            var conversation = _conversationRepo.GetConversationInfo(conversationId);
+            if (conversation is not null)
             {
-                return _mapper.Map<Conversation, ConversationReadDTO>(cons);
+                // Map the conversation to DTO
+                var conversationDto = _mapper.Map<Conversation, ConversationInfoDTO>(conversation);
+
+                // Fetch and map the last message
+                var lastMessage = _conversationRepo.GetLastMessage(conversationId);
+                if (lastMessage != null)
+                {
+                    conversationDto.LastMessage = _mapper.Map<Message, MessageSimpleDTO>(lastMessage);
+                }
+
+                return conversationDto;
             }
             else
             {
@@ -76,14 +78,43 @@ namespace Business.Services
             }
         }
 
-        public Conversation GetDirectConversation(ConversationCheckHasDirectDTO checkDTO)
+        public IEnumerable<MessageGetAllDTO> GetMessagesForConversation(Guid conversationId)
         {
-            return _conversationRepo.GetDirectConversation(checkDTO.UserId1,checkDTO.UserId2);
+            var messages = _conversationRepo.GetMessagesForConversation(conversationId);
+            return messages.Select(m => _mapper.Map<Message, MessageGetAllDTO>(m));
         }
+
 
         public bool HasDirectConversation(ConversationCheckHasDirectDTO checkDTO)
         {
             return _conversationRepo.HasDirectConversation(checkDTO.UserId1, checkDTO.UserId2);
         }
+
+        public IEnumerable<ConversationInfoDTO> GetAllUserConversations(Guid userId)
+        {
+            // Fetch all conversations for the user
+            var conversations = _conversationRepo.GetAllUserConversations(userId).ToList(); // Materialize Queries Early with ToList() to prevent NpgsqlOperationInProgressException
+
+            var conversationDtos = new List<ConversationInfoDTO>();
+
+            // Iterate over each conversation and map it to ConversationInfoDTO
+            foreach (var conversation in conversations)
+            {
+                var conversationDto = _mapper.Map<Conversation, ConversationInfoDTO>(conversation);
+
+                // Take the conversation id and get the last message.
+                var lastMessage = _conversationRepo.GetLastMessage(conversation.Id);
+                if (lastMessage != null)
+                {
+                    conversationDto.LastMessage = _mapper.Map<Message, MessageSimpleDTO>(lastMessage);
+                }
+
+                conversationDtos.Add(conversationDto);
+            }
+
+            return conversationDtos;
+        }
+
+
     }
 }

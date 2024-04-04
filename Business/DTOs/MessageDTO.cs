@@ -15,4 +15,18 @@ namespace Business.DTOs
         public Guid? ConversationId { get; set; } // This can be null if the conversation is not created yet
 
     }
+
+    public class MessageGetAllDTO
+    {
+        public string Content { get; set; }
+        public Guid SenderId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public Guid Id { get; set; }
+    }
+
+    public class MessageSimpleDTO 
+    {
+        public string Content { get; set; }
+        public DateTime CreatedAt { get; set; }
+    }
 }

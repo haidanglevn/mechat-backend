@@ -11,8 +11,10 @@ namespace Business.Interfaces
     public interface IConversationService
     {
         Conversation CreateNewConversation(ConversationCreateDTO conversationCreateDTO);
-        ConversationReadDTO? GetAllMessagesByConversationId(Guid conversationId);
         bool HasDirectConversation(ConversationCheckHasDirectDTO checkDTO);
         Conversation GetDirectConversation(ConversationCheckHasDirectDTO checkDTO);
+        ConversationInfoDTO? GetConversationInfo(Guid conversationId);
+        IEnumerable<MessageGetAllDTO> GetMessagesForConversation(Guid conversationId);
+        IEnumerable<ConversationInfoDTO> GetAllUserConversations(Guid userId);
     }
 }

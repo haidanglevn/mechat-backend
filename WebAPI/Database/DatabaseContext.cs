@@ -41,6 +41,7 @@ namespace WebAPI.Database
             modelBuilder.Entity<User>().HasData(SeedData.Users());
             modelBuilder.Entity<Conversation>().HasData(SeedData.Conversations());
             modelBuilder.Entity<Participant>().HasData(SeedData.Participants());
+            modelBuilder.Entity<Message>().HasData(SeedData.Messages());
 
             // User to Friendships
             modelBuilder.Entity<User>()

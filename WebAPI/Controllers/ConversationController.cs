@@ -26,11 +26,22 @@ namespace WebAPI.Controllers
             return _conversationService.HasDirectConversation(checkDto);    
         }
 
-        [HttpGet("get-messages-by-conversation-id/{conversationId}")]
-        public ActionResult<ConversationReadDTO> GetAllMessagesByConversationId(Guid conversationId)
+        [HttpGet("get-conversation-info/{conversationId}")]
+        public ActionResult<ConversationInfoDTO> GetConversationInfo(Guid conversationId)
         {
-            return Ok(_conversationService.GetAllMessagesByConversationId(conversationId));
+            return Ok(_conversationService.GetConversationInfo(conversationId));
+        }  
+        
+        [HttpGet("get-messages-for-conversation/{conversationId}")]
+        public ActionResult<MessageGetAllDTO> GetMessagesForConversation(Guid conversationId)
+        {
+            return Ok(_conversationService.GetMessagesForConversation(conversationId));
         }
 
+        [HttpGet("get-all-conversation/{userId}")]
+        public ActionResult<IEnumerable<ConversationInfoDTO>> GetAllConversations(Guid userId) 
+        {
+            return Ok(_conversationService.GetAllUserConversations(userId));
+        }
     }
 }

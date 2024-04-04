@@ -39,13 +39,7 @@ namespace WebAPI.Repositories
 
             return conversation;
         }
-
-        public Conversation? GetAllMessagesByConversationId(Guid conversationId)
-        {
-            return _conversations
-                        .Include(c => c.Messages)
-                        .FirstOrDefault(c=>c.Id == conversationId);
-        }
+      
 
         public Conversation GetDirectConversation(Guid userId1, Guid userId2)
         {
@@ -70,7 +64,6 @@ namespace WebAPI.Repositories
                 throw new InvalidOperationException("No direct conversation exists between the specified users.");
             }
         }
-
         public bool HasDirectConversation(Guid userId1, Guid userId2)
         {
             var directConversationExists = _participants
@@ -84,5 +77,28 @@ namespace WebAPI.Repositories
 
             return directConversationExists;
         }
+
+        public IEnumerable<Conversation> GetAllUserConversations(Guid userId)
+        {
+            return _conversations.AsNoTracking().Where(c => c.Participants.Any(p => p.UserId == userId)).Include(c => c.Participants);
+        }
+
+        public Conversation? GetConversationInfo(Guid conversationId)
+        {
+            return _conversations
+                        .Include(c => c.Participants)
+                        .FirstOrDefault(c => c.Id == conversationId);
+        }
+
+        public Message? GetLastMessage(Guid conversationId)
+        {
+            return _messages.AsNoTracking().Where(m => m.ConversationId == conversationId).OrderByDescending(m => m.CreatedAt).FirstOrDefault();
+        }
+
+        public IEnumerable<Message> GetMessagesForConversation(Guid conversationId)
+        {
+            return _messages.AsNoTracking().Where(m => m.ConversationId == conversationId).OrderBy(m => m.CreatedAt);
+        }
+
     }
 }
