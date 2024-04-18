@@ -88,6 +88,6 @@ app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<TestHub>("/test");
+app.MapHub<TestHub>("/testhub");
 
 app.Run();
