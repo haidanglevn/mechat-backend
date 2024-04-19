@@ -12,8 +12,8 @@ namespace WebAPI.Controllers
     public class MessageController : ControllerBase
     {
        private IMessageService _messageService;
-       private IHubContext<TestHub> _hubContext;
-       public MessageController(IMessageService messageService, IHubContext<TestHub> hubContext)
+       private IHubContext<ChatHub> _hubContext;
+       public MessageController(IMessageService messageService, IHubContext<ChatHub> hubContext)
         {
             _messageService = messageService;
             _hubContext = hubContext;
